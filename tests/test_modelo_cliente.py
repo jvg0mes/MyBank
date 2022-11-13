@@ -1,7 +1,7 @@
 import pytest
 from ..models.Cliente import Cliente
 
-class TestModelsClass:
+class TestModelsClassCliente:
     
     nome = "Joao"
     idade = 23
