@@ -1,20 +1,31 @@
+import os
+import shelve
+from base64 import encode,decode
+from getpass import getpass
+from msg.text import msg
 from models.Cliente import Cliente
 from models.Conta import Conta
 from models.Transacao import Transacao
 
-nome = "Joao"
-idade = 23
-cpf = "123.456.789-12"
-endereco = "Avenida Amacieiras"
-renda = 1000
+state = True
 
-cliente = Cliente(nome,idade,cpf,endereco,renda)
+clear = lambda : os.system('cls' if os.name=='nt' else 'clear')
 
-senha_correta = '$Joao123'
-senha_invalida_max_caracteres = '$Joao1234'
-senha_invalida_sem_caracter_especial = 'iJoao123'
-senha_invalida_sem_caracter_maiusculo = '*joao123'
+class Login():
 
-print("Ola")
+    def __init__(self):
+        print(msg['login_main'])
+        self.requireUsername()
+        self.requirePassword()
 
-conta = Conta(cliente,senha_correta)
+    def requireUsername(self):
+        self.__username = input(msg['login_username'])
+
+    def requirePassword(self):
+        self.__password = getpass(prompt = msg['login_password'])
+
+mylogin = Login()
+
+# credentials = shelve.open('./mocks/credentials')
+
+# credentials.insert({'username:'})
