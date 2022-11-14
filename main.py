@@ -1,20 +1,14 @@
+import os
+import shelve
+from base64 import encode,decode
+from msg.text import msg
 from models.Cliente import Cliente
 from models.Conta import Conta
 from models.Transacao import Transacao
+from models.Login import Login
 
-nome = "Joao"
-idade = 23
-cpf = "123.456.789-12"
-endereco = "Avenida Amacieiras"
-renda = 1000
+state = True
 
-cliente = Cliente(nome,idade,cpf,endereco,renda)
+clear = lambda : os.system('cls' if os.name=='nt' else 'clear')
 
-senha_correta = '$Joao123'
-senha_invalida_max_caracteres = '$Joao1234'
-senha_invalida_sem_caracter_especial = 'iJoao123'
-senha_invalida_sem_caracter_maiusculo = '*joao123'
-
-print("Ola")
-
-conta = Conta(cliente,senha_correta)
+mylogin = Login()
