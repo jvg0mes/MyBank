@@ -1,3 +1,5 @@
+from .Resultado import resultado
+
 class Cliente:
     
     def __init__(self, nome : str , idade : int, cpf : str, endereco : str, renda: float):
@@ -15,12 +17,6 @@ class Cliente:
         self.renda = renda
     
     def valida_cpf(cpf : str):
-        
-        class resultado:
-            def __init__(self,resultado,mensagem):
-                self.cpf = cpf
-                self.resultado = resultado
-                self.mensagem = mensagem
         
         numbers = range(0,10)
         numbers_str = [str(x) for x in numbers]

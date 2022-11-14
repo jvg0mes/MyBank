@@ -1,4 +1,5 @@
 from .Cliente import Cliente
+from .Resultado import resultado
 
 class Conta(Cliente):
     
@@ -14,12 +15,6 @@ class Conta(Cliente):
         
     def valida_senha(senha : str):
         
-        class resultado:
-            
-            def __init__(self,resultado,mensagem):
-                self.resultado = resultado
-                self.mensagem = mensagem
-            
         numbers = range(0,10)
         numbers_str = [str(x) for x in numbers]
         caracteres_especiais = '@#$%¨&*()-=\/?:.,^~;`´[]{\}//|'
