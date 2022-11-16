@@ -1,0 +1,5 @@
+'Cliente', (0, 5)
+'Usuario', (512, 5)
+'Login', (1024, 5)
+'Sessao', (1536, 5)
+'Transacao', (2048, 5)
