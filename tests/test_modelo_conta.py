@@ -1,8 +1,8 @@
 import pytest
-from ..models.Conta import Conta
+from ..models.Usuario import Usuario
 from ..models.Cliente import Cliente
 
-class TestModelsClassConta:
+class TestModelsClassUsuario:
     
     
     nome = "Joao"
@@ -19,15 +19,15 @@ class TestModelsClassConta:
     senha_invalida_sem_caracter_maiusculo = '*joao123'
     senha_invalida_sem_caracter_numerico = '*joaovpy'
     
-    def test_criacao_conta_valida(self):
+    def test_criacao_Usuario_valida(self):
         
-        conta = Conta(self.__class__.cliente,
-        self.__class__.senha_correta)
+        pass
+
+    def test_criacao_Usuario_invalida_maximo_caracteres(self):
         
-        assert((conta.senha == self.__class__.senha_correta)
-            )
+        pass
     
-    def test_criacao_conta_invalida_maximo_caracteres(self):
+    def test_criacao_Usuario_invalida_sem_caracter_especial(self):
         
         with pytest.raises(ValueError):
         
@@ -35,27 +35,13 @@ class TestModelsClassConta:
             
             #when
             
-            result = Conta(self.__class__.cliente,
-                self.__class__.senha_invalida_max_caracteres)
-            
-            #then
-            assert(result)
-    
-    def test_criacao_conta_invalida_sem_caracter_especial(self):
-        
-        with pytest.raises(ValueError):
-        
-            #given
-            
-            #when
-            
-            result = Conta(self.__class__.cliente,
+            result = Usuario(self.__class__.cliente,
                 self.__class__.senha_invalida_sem_caracter_especial)
             
             #then
             assert(result)
         
-    def test_criacao_conta_invalida_sem_caracter_maiusculo(self):
+    def test_criacao_Usuario_invalida_sem_caracter_maiusculo(self):
         
         with pytest.raises(ValueError):
         
@@ -63,13 +49,13 @@ class TestModelsClassConta:
             
             #when
             
-            result = Conta(self.__class__.cliente,
+            result = Usuario(self.__class__.cliente,
                 self.__class__.senha_invalida_sem_caracter_maiusculo)
             
             #then
             assert(result)
 
-    def test_criacao_conta_invalida_sem_caracter_numerico(self):
+    def test_criacao_Usuario_invalida_sem_caracter_numerico(self):
         
         with pytest.raises(ValueError):
         
@@ -77,7 +63,7 @@ class TestModelsClassConta:
             
             #when
             
-            result = Conta(self.__class__.cliente,
+            result = Usuario(self.__class__.cliente,
                 self.__class__.senha_invalida_sem_caracter_numerico)
             
             #then

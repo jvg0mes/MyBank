@@ -3,12 +3,7 @@ from getpass import getpass
 import shelve
 from sec.spw import spw
 from .Resultado import resultado
-
-tablepath = "./mocks/credentials"
-
-db= shelve.open(tablepath)
-
-db.update({'joao':spw.auth('12345',"set")})
+from services.database_service import database_service as db
 
 class Login():
 
@@ -24,18 +19,15 @@ class Login():
     @classmethod
     def __requireCredentials(self):
 
-        db = shelve.open(tablepath)
-
         __username = input(msg['login_username'])
         __password = getpass(prompt = msg['login_password'])
 
-        if (__username not in db.keys()):
-            db.close()
+        query = db.read_where('Usuario','cpf',['=',__username])
+
+        if (len(query) == 0):
             return(resultado(False,'Usuário inexistente'))
         else:
-            if(spw.auth(db[__username],'get') == __password):
-                db.close()
+            if(spw.auth(query[list(query.keys())[0]]['senha'],'get') == __password):
                 return(resultado(True,__username))
             else:
-                db.close()
                 return(resultado(False,'Senha incorreta'))
