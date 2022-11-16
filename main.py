@@ -3,6 +3,7 @@ from msg.text import msg
 from models.Cliente import Cliente
 from models.Usuario import Usuario
 from models.Login import Login
+from models.Sessao import Sessao
 from services.database_service import database_service as dbs
 
 nome= 'Joao'
@@ -20,3 +21,5 @@ print(Usuario('123-321-123.22','L@345679').registrar().mensagem)
 print(dbs.read('Usuario'))
 
 l = Login()
+
+s = Sessao(l)

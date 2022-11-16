@@ -13,14 +13,59 @@ class Login():
         auth = self.__requireCredentials()
         if (auth.resultado):
             print("\nBem-vindo " + auth.mensagem + "!")
+            self.user = auth.mensagem
+        elif (auth.resultado == 'signin'):
+            'registrar'
         else:
             print("\n" + auth.mensagem)
+            raise(ValueError)
+
+        class SessionKey():
+
+            def __init__(self):
+                
+                r = SessionKey.generate_key()
+                if r.resultado:
+                    self.key = r.mensagem
+                else:
+                    raise(resultado(False,'Falha ao gerar a chave'))
+
+            def generate_key():
+
+                import random
+
+                l = [chr(x) for x in range(97, 123)]
+                lu = [chr(x).upper() for x in range(97, 123)]
+
+                nk = random.randint(100000,999999)
+                lk = random.choices(l,k=10)
+                lku = random.choices(lu,k=5)
+                rk = auth.mensagem.replace('.','').replace('-','')
+
+                key = list(str(nk) + ''.join(lk) + ''.join(lku))
+                random.shuffle(key)
+
+                key = (''.join(key[0:3]) + rk[0:3] + ''.join(key[3:6]) +
+                rk[3:6] + ''.join(key[6:9]) + rk[6:9] + 
+                ''.join(key[9:12]) + rk[9:] + ''.join(key[12:]))
+
+                # core = key[3:6] + key[9:12] + key[15:18] + key[21:23]
+
+                return(resultado(True,key))
+
+            def get_key(self):
+                return(self.key)
+
+        self.skey = SessionKey().get_key()
 
     @classmethod
     def __requireCredentials(self):
 
         __username = input(msg['login_username'])
         __password = getpass(prompt = msg['login_password'])
+
+        if __username == 'signin':
+            return(resultado(True,'signin'))
 
         query = db.read_where('Usuario','cpf',['=',__username])
 

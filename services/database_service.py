@@ -13,6 +13,10 @@ class database_service():
 
         from .schema import schemas
 
+        print("-"*50 + 'schemas' + "-"*50 + "\n")
+        print(schemas)
+        print("\n" + "-"*100 + "\n")
+
         if type(obj) == schemas[table]:
             return(resultado(True,'Schema valido'))
         else:
@@ -25,7 +29,7 @@ class database_service():
         return(dbase[table])
 
 
-    def write(obj,table : str):
+    def write(obj,table : str, replace = False):
 
         # valida se a primeira key é o nome da tabela
 
@@ -37,7 +41,10 @@ class database_service():
 
                 row_id = database_service.get_id(table)
 
-                data = {str(row_id):obj.__dict__}
+                if ((replace == False) & (type(replace) == bool)):
+                    data = {str(row_id):obj.__dict__}
+                else:
+                    data = {str(replace):obj.__dict__}
 
                 with database_service.open_connection(table) as db:          
 
