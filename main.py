@@ -16,9 +16,17 @@ state = True
 
 clear = lambda : os.system('cls' if os.name=='nt' else 'clear')
 
-print(Usuario('123-321-123.22','L@345679').registrar().mensagem)
+enable_print = True
 
-print(dbs.read('Usuario'))
+#print(Usuario('123-321-123.22','L@345679').registrar().mensagem)
+
+if enable_print:
+    print("\nTABELA Cliente \n")
+    print(dbs.read('Cliente'))
+    print("\n"+ '-'*50 + '\n')
+    print("TABELA USUARIO \n")
+    print(dbs.read('Usuario'))
+    print("\n"+ '-'*50 + '\n\n')
 
 l = Login()
 

@@ -4,3 +4,9 @@ class resultado:
                 self.resultado = resultado
                 self.mensagem = mensagem
                 self.exception = exception
+
+            def get_resultado(self):
+                return(self.resultado)
+
+            def get_mensagem(self):
+                return(self.mensagem)

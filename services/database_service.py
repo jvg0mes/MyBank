@@ -3,6 +3,8 @@ from models.Resultado import resultado
 
 class database_service():
 
+    debug = False
+
     def open_connection(table):
 
         path = "./mocks/"
@@ -13,9 +15,10 @@ class database_service():
 
         from .schema import schemas
 
-        print("-"*50 + 'schemas' + "-"*50 + "\n")
-        print(schemas)
-        print("\n" + "-"*100 + "\n")
+        if database_service.debug:
+            print("-"*50 + 'schemas' + "-"*50 + "\n")
+            print(schemas)
+            print("\n" + "-"*100 + "\n")
 
         if type(obj) == schemas[table]:
             return(resultado(True,'Schema valido'))
@@ -34,8 +37,6 @@ class database_service():
         # valida se a primeira key é o nome da tabela
 
             scheck = database_service.check_schema(obj = obj,table = table)
-
-            print(scheck.resultado)
 
             if scheck.resultado == True:
 

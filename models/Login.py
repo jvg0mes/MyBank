@@ -3,34 +3,41 @@ from getpass import getpass
 import shelve
 from sec.spw import spw
 from .Resultado import resultado
+from .Cadastro import Cadastro
 from services.database_service import database_service as db
+import os
 
 class Login():
 
+    debug = False
+
     def __init__(self):
 
-        print(msg['login_main'])
-        auth = self.__requireCredentials()
-        if (auth.resultado):
-            print("\nBem-vindo " + auth.mensagem + "!")
-            self.user = auth.mensagem
-        elif (auth.resultado == 'signin'):
-            'registrar'
-        else:
-            print("\n" + auth.mensagem)
-            raise(ValueError)
+        self.user = None
+        self.auth = None
+
+        l = self.logar()
+        if Login.debug: print('Mensagem do login: ' + l.mensagem)
+        
+        if l.mensagem == 'Cadastro realizado':
+            os.system('cls' if os.name=='nt' else 'clear')
+            l = self.logar()
 
         class SessionKey():
 
             def __init__(self):
                 
                 r = SessionKey.generate_key()
+                
                 if r.resultado:
                     self.key = r.mensagem
                 else:
-                    raise(resultado(False,'Falha ao gerar a chave'))
+                    raise(Exception)
 
             def generate_key():
+
+                if self.user == None:
+                    return(resultado(False,"Usuario nao logado"))
 
                 import random
 
@@ -40,7 +47,7 @@ class Login():
                 nk = random.randint(100000,999999)
                 lk = random.choices(l,k=10)
                 lku = random.choices(lu,k=5)
-                rk = auth.mensagem.replace('.','').replace('-','')
+                rk = self.user.replace('.','').replace('-','')
 
                 key = list(str(nk) + ''.join(lk) + ''.join(lku))
                 random.shuffle(key)
@@ -62,10 +69,10 @@ class Login():
     def __requireCredentials(self):
 
         __username = input(msg['login_username'])
-        __password = getpass(prompt = msg['login_password'])
-
         if __username == 'signin':
             return(resultado(True,'signin'))
+
+        __password = getpass(prompt = msg['login_password'])
 
         query = db.read_where('Usuario','cpf',['=',__username])
 
@@ -76,3 +83,23 @@ class Login():
                 return(resultado(True,__username))
             else:
                 return(resultado(False,'Senha incorreta'))
+
+    def logar(self):
+
+        print(msg['login_main'])
+        auth = self.__requireCredentials()
+        if (auth.mensagem == 'signin'):
+            cadastro = Cadastro()
+            c = cadastro.cadastrar()
+            print(c.mensagem)
+            if c.resultado:
+                return(resultado(True,'Cadastro realizado'))
+            else:
+                return(resultado(False,'Falha no cadastro'))
+        elif (auth.resultado):
+            print("\nBem-vindo " + auth.mensagem + "!")
+            self.user = auth.mensagem
+            return(resultado(True,'Login efetuado'))
+        else:
+            print("\n" + auth.mensagem)
+            raise(ValueError)
