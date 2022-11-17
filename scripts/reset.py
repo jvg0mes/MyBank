@@ -18,4 +18,8 @@ for e in list(schemas.keys()):
     
 for x in del_list:
     os.remove(x)
-    
+
+dbase = shelve.open('dbase')
+
+for k,v in dbase.items():
+    dbase.update({k:0})
