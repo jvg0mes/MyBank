@@ -97,7 +97,7 @@ class Login():
             else:
                 return(resultado(False,'Falha no cadastro'))
         elif (auth.resultado):
-            print("\nBem-vindo " + auth.mensagem + "!")
+            #print("\nBem-vindo " + auth.mensagem + "!")
             self.user = auth.mensagem
             return(resultado(True,'Login efetuado'))
         else:

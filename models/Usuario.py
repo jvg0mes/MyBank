@@ -2,7 +2,9 @@ from .Resultado import resultado
 
 class Usuario():
     
-    def __init__(self, cpf : str,senha: str):
+    def __init__(self, cpf : str,senha: str,
+                idCliente : int = None, 
+                idUsuario: int = None):
         
         self.cpf = cpf
         
@@ -11,6 +13,9 @@ class Usuario():
             self.senha = senha
         else:
             raise(ValueError(validacao_senha.mensagem))
+
+        self.idCliente = idCliente
+        self.idUsuario = idUsuario
         
     def valida_senha(senha : str):
         
@@ -46,22 +51,3 @@ class Usuario():
             return resultado(True,"Senha valido")
         else:
             return resultado(False,"Formato incorreto de Senha")
-
-    def registrar(self):
-
-        from services.database_service import database_service as db
-
-        from sec.spw import spw
-
-        if len(self.senha) != 8:
-            return resultado(False,"Tamanho invalido de Senha")   
-         
-        if len(db.read_where('Usuario','cpf',['=',self.cpf])) > 0:
-            return resultado(False,'Usuario ja existe')
-        else:
-            try:
-                db.write(Usuario(self.cpf,spw.auth(self.senha,"set")),
-                'Usuario')
-                return resultado(True,'Usuario registrado com sucesso')
-            except Exception as e:
-                return resultado(False,'Falha ao criar o usuario')
