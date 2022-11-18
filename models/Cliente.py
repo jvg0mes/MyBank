@@ -2,7 +2,9 @@ from .Resultado import resultado
 
 class Cliente:
     
-    def __init__(self, nome : str , idade : int, cpf : str, endereco : str, renda: float):
+    def __init__(self, nome : str , idade : int, 
+                 cpf : str, endereco : str, 
+                 renda: float, idCliente : int):
         
         self.nome = nome
         self.idade = idade
@@ -15,6 +17,7 @@ class Cliente:
         
         self.endereco = endereco
         self.renda = renda
+        self.idCliente = idCliente
     
     def valida_cpf(cpf : str):
         
@@ -59,25 +62,3 @@ class Cliente:
             return resultado(True,"CPF valido")
         else:
             return resultado(False,"Formato incorreto de CPF")
-
-    def registrar(self):
-
-        import shelve
-        
-        tablepath = "./mocks/"
-
-        db= shelve.open(tablepath + 'Clientes')
-
-        try:
-            db.update({'Clientes':
-                {
-                'nome' : self.nome,
-                'idade' : self.idade,
-                'cpf' : self.cpf,
-                'endereco' : self.endereco,
-                'renda': self.renda
-                }
-            })
-            return(resultado(True,'Cliente registrado com sucesso'))
-        except:
-            return(resultado(False,'Falha ao registrar o cliente'))
